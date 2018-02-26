@@ -1,5 +1,7 @@
 body {
   font-family: Roboto,Arial,sans-serif;
+  color: white;
+  background-color: #1A1A1A;
 }
 
 a {
@@ -19,6 +21,8 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+
 
 #app-container {
   display: flex;
@@ -70,25 +74,65 @@ form div {
    display: flex;
    align-items: center;
    flex-direction: column;
+   padding-top: 1rem;
+   padding-bottom: 1rem;
+   border-color: white;
+   border-style: solid;
+   border-width: thin;
+   margin-top: 1rem;
+}
+
+#dropbox-picker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-color: white;
+  border-style: solid;
+  border-width: thin;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+#pre-auth-section{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#authed-section {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  flex-direction: column;
 }
 
 #gdrive-icon {
   max-width: 20%;
+  padding-top: 2rem;
 }
 
+#db-icon {
+  max-width: 20%;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
 
-
-#app-components{
+#app-components {
   display: flex;
   justify-content: center;
 }
 
+#copy-to-dropbox-btn{
+  margin-top: 1rem;
+}
+
 iframe {
-  display: flex !important;
+  position: inherit;
   background-color: green;
   margin: 0;
   padding: 0;
   border: none;
-  width: 10px;
-  height: 10px;
 }

@@ -1,5 +1,6 @@
 let pickerApiLoaded = false;
 let oauthToken;
+
 // cant get these to access the secrets file, momentarily hard coded for time
 const developerKey = process.env.GOOGLE_DEVELOPER_KEY;
 const developerKeyHardCoded = 'AIzaSyBIAgZTf4XcKdZ9nIXoHVMjfEugbGlkPQs';
@@ -78,7 +79,7 @@ function pickerCallback(data) {
   let typeicon
   if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
     let doc = data[google.picker.Response.DOCUMENTS][0];
-    console.log('DOC LOG', doc)
+    console.log('Google Drive Object', doc)
     name = doc.name
     url = doc[google.picker.Document.URL];
     filetype = doc.type
@@ -107,4 +108,4 @@ function downloadFile(file, callback) {
     }
   }
 
-  export default onApiLoad
+export default onApiLoad

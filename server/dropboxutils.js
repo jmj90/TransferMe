@@ -1,76 +1,68 @@
-// 'use strict';
-//
-// // Standalone example to demonstrate codeflow.
-// // Start the server, hit localhost:3000 on the browser, and click through.
-// // On the server logs, you should have the auth code, as well as the token
-// // from exchanging it. This exchange is invisible to the app user
-//
-// require('isomorphic-fetch');
-//
-// const app = require('express')();
-// const hostname = 'localhost';
-// const port = 8080;
-// //const https = require('https');
-//
-//
-// const config = {
-//   clientId: ['7pqywseuvbmdm6a'],
-//   clientSecret: ['w2qki0k3a25y0pf']
-// };
-//
-// const Dropbox = require('dropbox').Dropbox;
-// var dbx = new Dropbox(config);
-//
-// const redirectUri = `http://${hostname}:${port}/auth`;
-// const authUrl = dbx.getAuthenticationUrl(redirectUri, null, 'code');
-//
-// app.get('/', (req, res) => {
-//   res.writeHead(302, { 'Location': authUrl });
-//   res.end();
-// });
-//
-//
-// app.get('/auth', (req, res) => {
-//   let code = req.query.code;
-//   console.log(code);
-//   var options = Object.assign({
-//     code,
-//     redirectUri
-//   }, config);
-//
-//
-//   dbx.getAccessTokenFromCode(redirectUri, code)
-//     .then(function(token) {
-//         console.log(token);
-//     })
-//     .catch(function(error) {
-//         console.log(error);
-//     });
-// });
-//
-// app.listen(port);
-//
+import Dropbox from 'dropbox'
+
+// ====== loader for all dropbox functions  ====== \\
+function loadDropbox(){
+
+  // hardcoded while working
+  // var CLIENT_ID = process.env.DROPBOX_CLIENT_ID
+   var CLIENT_ID = '7pqywseuvbmdm6a';
+
+  // Parses the url and gets the access token if it is in the urls hash
+  function getAccessTokenFromUrl() {
+   return utils.parseQueryString(window.location.hash).access_token;
+  }
+
+  // If the user was just redirected from authenticating, the urls hash will
+  // contain the access token.
+  function isAuthenticated() {
+    return !!getAccessTokenFromUrl();
+  }
+
+  // Render a list of items to #files
+  function renderItems(items) {
+    var filesContainer = document.getElementById('files');
+    items.forEach(function(item) {
+      var li = document.createElement('li');
+      li.innerHTML = item.name
+      console.log('Dropbox "Item" Object', item)
+      filesContainer.appendChild(li);
+    });
+  }
+
+  // keeps both the authenticate and non-authenticated setions
+  // in the DOM and uses this function to show/hide the correct section.
+  function showPageSection(elementId) {
+    let section = document.getElementById(elementId)
+    // section.hidden = true
+  }
+
+  if (isAuthenticated()) {
+    // showPageSection('authed-section');
+    document.getElementsByClassName('authed').hidden = false
+
+    // Create an instance of Dropbox with the access token and use it to
+    // fetch and render the files in the users root directory.
+    document.getElementById('authlink').hidden = true
+    var dbx = new Dropbox.Dropbox({ accessToken: getAccessTokenFromUrl() });
+    dbx.filesListFolder({path: ''})
+      .then(function(response) {
+        renderItems(response.entries);
+      })
+      .catch(function(error) {
+        console.error(error);
+      });
+  } else {
+    showPageSection('pre-auth-section');
+    document.getElementsByClassName('authed').hidden = true
+    document.getElementById('authlink').hidden = false
+
+    // Set the login anchors href using dbx.getAuthenticationUrl()
+    var dbx = new Dropbox.Dropbox({ clientId: CLIENT_ID });
+    var authUrl = dbx.getAuthenticationUrl('http://localhost:8080/authDROPBOX');
+    document.getElementById('authlink').href = authUrl;
+    // document.getElementById('authTest').href = authUrl;
+  }
+}
 
 
-// const Dropbox = require('dropbox').Dropbox;
-// const DropboxTeam = require('dropbox').DropboxTeam;
-//
-// import axios from 'axios'; // or another library of choice.
-//
-// var dbx = new Dropbox({ accessToken: '9Xh1_fTf1rwAAAAAAACBf5cqbdheRgKYnodMUyYWCdDhG04HcmSlbDWX7x7N2tCr' });
-//
-// dbx.usersGetCurrentAccount()
-//   .then(function(response) {
-//     console.log(response);
-//   })
-//   .catch(function(error) {
-//     console.error(error);
-//   });
-
-// dbx.filesListFolder({path: ''})
-//   .then(function(response) {
-//     console.log(response);
-//   })
-//   .catch(function(error) {
-//     console.log(error);
-//   });
+export default loadDropbox
