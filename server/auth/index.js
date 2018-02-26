@@ -1,43 +1,36 @@
 const router = require('express').Router()
 const User = require('../db/models/user')
+const hostname = 'localhost';
+const port = 8080;
+
+require('isomorphic-fetch');
+
 module.exports = router
 
-router.post('/login', (req, res, next) => {
-  User.findOne({where: {email: req.body.email}})
-    .then(user => {
-      if (!user) {
-        res.status(401).send('User not found')
-      } else if (!user.correctPassword(req.body.password)) {
-        res.status(401).send('Incorrect password')
-      } else {
-        req.login(user, err => (err ? next(err) : res.json(user)))
-      }
-    })
-    .catch(next)
-})
 
-router.post('/signup', (req, res, next) => {
-  User.create(req.body)
-    .then(user => {
-      req.login(user, err => (err ? next(err) : res.json(user)))
-    })
-    .catch(err => {
-      if (err.name === 'SequelizeUniqueConstraintError') {
-        res.status(401).send('User already exists')
-      } else {
-        next(err)
-      }
-    })
-})
+const config = {
+  clientId: ['7pqywseuvbmdm6a'],
+  clientSecret: ['w2qki0k3a25y0pf']
+};
 
-router.post('/logout', (req, res) => {
-  req.logout()
-  req.session.destroy()
-  res.redirect('/')
-})
+const Dropbox = require('dropbox').Dropbox;
+var dbx = new Dropbox(config);
 
-router.get('/me', (req, res) => {
-  res.json(req.user)
-})
+const redirectUri = `http://${hostname}:${port}/auth/db`;
+const authUrl = dbx.getAuthenticationUrl(redirectUri, null, 'code');
 
-router.use('/google', require('./google'))
+router.get('/', (req, res) => {
+  res.writeHead(302, { 'Location': authUrl });
+  res.end();
+});
+
+
+router.get('/db', (req, res) => {
+  let code = req.query.code;
+  console.log('this is the code: ', code);
+  var options = Object.assign({
+    code,
+    redirectUri
+  }, config);
+
+});

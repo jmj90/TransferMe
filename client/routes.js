@@ -28,7 +28,7 @@ class Routes extends Component {
         <Main>
           <Switch>
             {/* Routes placed here are available to all visitors */}
-            <Route exact path="/" component={TransferView} />
+            <Route exact path="/gtest" component={TransferView} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             {

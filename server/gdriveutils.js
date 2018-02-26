@@ -42,7 +42,7 @@ function createPicker() {
   if (pickerApiLoaded && oauthToken) {
 
     //generates a 'select a file' button
-    var pickfileBtn = document.getElementById('pickfile');
+    let pickfileBtn = document.getElementById('pickfile');
     pickfileBtn.addEventListener('click', function() {
       createPicker()
     });
@@ -50,16 +50,16 @@ function createPicker() {
     pickfileBtn.hidden = false;
 
     //allows for folders to be selected
-    var docsView = new google.picker.DocsView()
+    let docsView = new google.picker.DocsView()
       .setIncludeFolders(true)
         .setSelectFolderEnabled(true)
           .setParent('root');
 
     // renders google uploader
-    var docsUpload = new google.picker.DocsUploadView()
+    let docsUpload = new google.picker.DocsUploadView()
 
     // renders the Picker Object with all parameters we set
-    var picker = new google.picker.PickerBuilder()
+    let picker = new google.picker.PickerBuilder()
       .addView(docsView)
         .addView(docsUpload)
           .setOAuthToken(oauthToken)
@@ -72,19 +72,27 @@ function createPicker() {
 
   // A simple callback implementation.
 function pickerCallback(data) {
-  var url = 'nothing';
+  let url = 'no current selection';
+  let name;
+  let filetype;
+  let typeicon
   if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
-    var doc = data[google.picker.Response.DOCUMENTS][0];
+    let doc = data[google.picker.Response.DOCUMENTS][0];
+    console.log('DOC LOG', doc)
+    name = doc.name
     url = doc[google.picker.Document.URL];
+    filetype = doc.type
+    typeicon = `<img src=${doc.iconUrl}/>`
   }
-  var message = 'You picked: ' + url;
+  let message = 'You have selected: ' + name + ' [file type: ' + filetype + ' ' + typeicon + ']';
   document.getElementById('result').innerHTML = message;
+  document.getElementById('copy-to-dropbox-btn').innerHTML = '<button>Copy To Dropbox</button>'
 }
 
 function downloadFile(file, callback) {
     if (file.downloadUrl) {
-      var accessToken = gapi.auth.getToken().access_token;
-      var xhr = new XMLHttpRequest();
+      let accessToken = gapi.auth.getToken().access_token;
+      let xhr = new XMLHttpRequest();
       xhr.open('GET', file.downloadUrl);
       xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
       xhr.onload = function() {

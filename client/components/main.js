@@ -14,10 +14,15 @@ const Main = (props) => {
   const {children, handleClick, isLoggedIn} = props
 
   return (
-    <div>
-      <h1>Transfer Me</h1>
-      <hr />
+    <div id="app-container">
+      <div id="header">
+        <h1>Transfer Me</h1>
+        <h3>Transfer Files and Folders between Dropbox and Google Drive</h3>
+      </div>
+        <hr />
+        <div id="app-components">
       {children}
+    </div>
     </div>
   )
 }

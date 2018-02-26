@@ -17257,15 +17257,6 @@ html {
     overflow: hidden
 }
 
-body {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  font-family: Roboto,Arial,sans-serif;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
 
 form {
     margin: 0;

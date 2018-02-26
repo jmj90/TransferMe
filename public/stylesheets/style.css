@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: Roboto,Arial,sans-serif;
 }
 
 a {
@@ -18,6 +18,21 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+#app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 100vh;
+}
+
+#header {
+  display: flex;
+  padding-top: 3rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .picker {
@@ -43,7 +58,6 @@ form div {
 
 .picker-dialog {
     position: absolute !important;
-    left: 10px !important;
     width: 40% !important;
 
 }
@@ -52,10 +66,29 @@ form div {
   display:none
 }
 
-#google-picker {
-  /* background-color: red; */
+ #google-picker {
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+}
+
+#gdrive-icon {
+  max-width: 20%;
+}
+
+
+
+#app-components{
+  display: flex;
+  justify-content: center;
 }
 
 iframe {
-    background-color: red;
+  display: flex !important;
+  background-color: green;
+  margin: 0;
+  padding: 0;
+  border: none;
+  width: 10px;
+  height: 10px;
 }
