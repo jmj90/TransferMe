@@ -61,7 +61,7 @@ export class TransferView extends Component {
           </div>
           {/*<button id="authTest" link="" onClick={() => this.handleClick(document.getElementById('authlink').href)}>open popup</button>*/}
           <div id="authed-section">
-            <button className="authed">Copy To Google Drive</button>
+            <button className="authed" hidden>Copy To Google Drive</button>
             <ul id="files" />
           </div>
         </div>
