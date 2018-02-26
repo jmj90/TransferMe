@@ -1,7 +1,7 @@
-• Clone Repo and run [npm install]
-• To load application run [npm run start-dev]
-• Input to 'localhost:8080' in your browser
-• To test Dropbox API run [npm run test-dropbox]
+- Clone Repo and run [npm install]
+- To load application run [npm run start-dev]
+- Input to 'localhost:8080' in your browser
+- To test Dropbox API run [npm run test-dropbox]
 
 // Notes : ToDo
    - Uploading/copying functionality currently in progress
